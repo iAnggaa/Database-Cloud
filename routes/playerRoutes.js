@@ -29,6 +29,19 @@ router.post("/:id/inventory", addInventoryItem);
 router.put("/:id/inventory/:itemIndex", updateInventoryItem);
 router.delete("/:id/inventory/:itemIndex", deleteInventoryItem);
 
+// Quest routes
+const {
+  getAllQuests,
+  addQuest,
+  updateQuest,
+  deleteQuest,
+} = require("../controllers/questController");
+
+router.get("/:id/quests", getAllQuests);
+router.post("/:id/quests", addQuest);
+router.patch("/:id/quests/:questIndex", updateQuest);
+router.delete("/:id/quests/:questIndex", deleteQuest);
+
 // Achievement routes
 const {
   getAllAchievements,
