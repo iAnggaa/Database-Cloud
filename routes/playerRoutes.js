@@ -16,4 +16,18 @@ router.post("/", createPlayer);
 router.put("/:id", updatePlayer);
 router.delete("/:id", deletePlayer);
 
+// Inventory routes
+const {
+  getInventory,
+  addInventoryItem,
+  updateInventoryItem,
+  deleteInventoryItem,
+} = require("../controllers/inventoryControllers");
+
+router.get("/:id/inventory", getInventory);
+router.post("/:id/inventory", addInventoryItem);
+router.put("/:id/inventory/:itemIndex", updateInventoryItem);
+router.delete("/:id/inventory/:itemIndex", deleteInventoryItem);
+
+
 module.exports = router;
