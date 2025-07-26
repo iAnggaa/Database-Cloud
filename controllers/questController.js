@@ -37,6 +37,7 @@ async function updateQuest(req, res) {
     const quest = player.quests[questIndex];
     if (!quest) return res.status(404).json({ message: "Quest not found" });
 
+    // Update hanya field yang dikirim
     Object.assign(quest, req.body);
     await player.save();
 
@@ -66,8 +67,39 @@ async function deleteQuest(req, res) {
   }
 }
 
+// [PATCH] update quest progress
+async function updateQuestProgress(req, res) {
+  try {
+    const { id, questIndex } = req.params;
+    const player = await Player.findById(id);
+    if (!player) return res.status(404).json({ message: "Player not found" });
+
+    const quest = player.quests[questIndex];
+    if (!quest) return res.status(404).json({ message: "Quest not found" });
+
+    quest.progress += req.body.amount || 1;
+
+    if (quest.progress >= quest.target && quest.status !== "completed") {
+      quest.status = "completed";
+      player.gold += quest.rewardGold;
+      player.experience += quest.rewardGold;
+
+      // Level up otomatis
+      while (player.experience >= player.level * 100) {
+        player.experience -= player.level * 100;
+        player.level += 1;
+      }
+    }
+
+    await player.save();
+    res.json({ message: "Quest progress updated", quest, level: player.level });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
 
 module.exports = {
+  updateQuestProgress,
   getAllQuests,
   addQuest,
   updateQuest,

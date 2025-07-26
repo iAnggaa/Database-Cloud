@@ -83,7 +83,7 @@ async function getRareAchievements(req, res) {
     const withPercentage = aggResult.map((a) => ({
       achievementTitle: a._id,
       playerCount: a.playerCount,
-      percentage: ((a.playerCount / totalPlayers) * 100).toFixed(2) + "%", // 2 angka di belakang koma
+      percentage: ((a.playerCount / totalPlayers) * 100).toFixed(2) + "%",
     }));
 
     res.status(200).json({
