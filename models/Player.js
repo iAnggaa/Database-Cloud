@@ -43,7 +43,7 @@ const AchievementSchema = new Schema({
  * Player Schema (Main)
  */
 const PlayerSchema = new Schema({
-  _id: String, // custom ID seperti '1'
+  _id: String,
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   level: { type: Number, default: 1 },
@@ -55,5 +55,4 @@ const PlayerSchema = new Schema({
   createdAt: { type: Date, default: Date.now }
 });
 
-// ⬇️ Model bernama 'player', otomatis koleksi bernama 'players'
 module.exports = mongoose.model('player', PlayerSchema);
