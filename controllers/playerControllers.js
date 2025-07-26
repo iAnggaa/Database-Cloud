@@ -76,10 +76,40 @@ async function deletePlayer(req, res) {
   }
 }
 
+// [GET] Leaderboard (Top 10 level & experience)
+async function getLeaderboard(req, res) {
+  try {
+    const leaderboard = await Player.aggregate([
+      { $sort: { level: -1, experience: -1 } },
+      { $limit: 10 },
+      {
+        $project: {
+          _id: 0,
+          username: 1,
+          level: 1,
+          experience: 1,
+          gold: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      message: "Leaderboard berhasil diambil",
+      data: leaderboard,
+    });
+  } catch (err) {
+    console.error("Leaderboard error:", err);
+    res
+      .status(500)
+      .json({ message: "Gagal mengambil leaderboard", error: err.message });
+  }
+}
+
 module.exports = {
   getAllPlayers,
   getPlayerById,
   createPlayer,
   updatePlayer,
-  deletePlayer
+  deletePlayer,
+  getLeaderboard,
 };
