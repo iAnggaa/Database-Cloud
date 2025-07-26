@@ -29,5 +29,17 @@ router.post("/:id/inventory", addInventoryItem);
 router.put("/:id/inventory/:itemIndex", updateInventoryItem);
 router.delete("/:id/inventory/:itemIndex", deleteInventoryItem);
 
+// Achievement routes
+const {
+  getAllAchievements,
+  addAchievement,
+  deleteAchievement,
+  getRareAchievements,
+} = require("../controllers/achievementControllers");
+
+router.get("/:id/achievements", getAllAchievements);
+router.post("/:id/achievements", addAchievement);
+router.delete("/:id/achievements/:achievementIndex", deleteAchievement);
+router.get("/achievements/rare", getRareAchievements);
 
 module.exports = router;
